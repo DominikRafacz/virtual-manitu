@@ -1,4 +1,4 @@
-package fun.dr.ktulu.listeners;
+package fun.dr.ktulu.bot.listeners;
 
 
 import net.dv8tion.jda.api.events.GenericEvent;

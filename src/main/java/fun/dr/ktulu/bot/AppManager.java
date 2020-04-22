@@ -1,8 +1,8 @@
 package fun.dr.ktulu.bot;
 
 
-import fun.dr.ktulu.listeners.MessageListener;
-import fun.dr.ktulu.listeners.ReadyListener;
+import fun.dr.ktulu.bot.listeners.MessageListener;
+import fun.dr.ktulu.bot.listeners.ReadyListener;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.requests.GatewayIntent;

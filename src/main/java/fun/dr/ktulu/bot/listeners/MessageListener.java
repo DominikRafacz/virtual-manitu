@@ -1,4 +1,4 @@
-package fun.dr.ktulu.listeners;
+package fun.dr.ktulu.bot.listeners;
 
 import fun.dr.ktulu.messaging.MessageManager;
 import fun.dr.ktulu.messaging.command.Command;
