@@ -1,6 +1,7 @@
 package fun.dr.ktulu.bot;
 
 
+import fun.dr.ktulu.listeners.MessageListener;
 import fun.dr.ktulu.listeners.ReadyListener;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
@@ -47,7 +48,9 @@ public class AppManager {
                             GatewayIntent.DIRECT_MESSAGES
                     ))
                     .enableIntents(GatewayIntent.GUILD_MEMBERS)
-                    .addEventListeners(new ReadyListener())
+                    .addEventListeners(
+                            new ReadyListener(),
+                            new MessageListener())
                     .disableCache(List.of(
                             CacheFlag.ACTIVITY,
                             CacheFlag.VOICE_STATE,
@@ -55,9 +58,9 @@ public class AppManager {
                             CacheFlag.CLIENT_STATUS
                     ))
                     .build();
-            logger.debug("JDA built.");
+            logger.info("JDA built.");
             jda.awaitReady();
-            logger.debug("JDA loaded.");
+            logger.info("JDA loaded.");
         } catch (LoginException | InterruptedException e) {
             logger.error("Error during JDA building!");
             e.printStackTrace();
