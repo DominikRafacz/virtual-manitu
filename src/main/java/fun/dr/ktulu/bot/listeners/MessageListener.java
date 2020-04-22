@@ -34,7 +34,7 @@ public class MessageListener implements EventListener {
                     e.printStackTrace();
                 } catch (ValidationException e) {
                     LOGGER.warn("Validation exception raised!");
-                    message.getChannel().sendMessage("Nieodpowiednie użycie komendy!").queue();
+                    e.sendBotMessage(message.getChannel());
                 }
             }
         }

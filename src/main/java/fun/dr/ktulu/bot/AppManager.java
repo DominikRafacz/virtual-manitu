@@ -3,6 +3,7 @@ package fun.dr.ktulu.bot;
 
 import fun.dr.ktulu.bot.listeners.MessageListener;
 import fun.dr.ktulu.bot.listeners.ReadyListener;
+import lombok.Getter;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.requests.GatewayIntent;
@@ -24,6 +25,8 @@ public class AppManager {
     private static final String CONFIG_FILE = "src/main/resources/config.json";
     private static final Logger LOGGER = LoggerFactory.getLogger(AppManager.class);
     private String BOT_TOKEN;
+
+    @Getter
     private JDA jda;
 
     private AppManager() {
@@ -54,7 +57,8 @@ public class AppManager {
                             CacheFlag.ACTIVITY,
                             CacheFlag.VOICE_STATE,
                             CacheFlag.EMOTE,
-                            CacheFlag.CLIENT_STATUS
+                            CacheFlag.CLIENT_STATUS,
+                            CacheFlag.MEMBER_OVERRIDES
                     ))
                     .build();
             LOGGER.info("JDA built.");
@@ -75,9 +79,5 @@ public class AppManager {
             LOGGER.error("Cannot load config.");
             e.printStackTrace();
         }
-    }
-
-    private JDA getJDA() {
-        return jda;
     }
 }

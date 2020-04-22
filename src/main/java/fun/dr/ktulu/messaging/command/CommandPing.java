@@ -12,7 +12,11 @@ public class CommandPing extends Command {
 
     @Override
     public void execute() {
-        channel.sendMessage("pong").queue();
         LOGGER.debug("Pinged to user {}", message.getAuthor().getName());
+    }
+
+    @Override
+    protected void sendSuccessMessage() {
+        sendResponseMessage("pong");
     }
 }
