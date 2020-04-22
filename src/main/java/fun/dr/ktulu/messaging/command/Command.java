@@ -27,8 +27,13 @@ public abstract class Command {
         }
     }
 
-    public abstract void execute();
-    protected void logExecution() {
+    protected abstract void validate() throws ValidationException;
+    protected abstract void execute() throws ExecutionException;
+
+    public void issue() throws ValidationException, ExecutionException {
+        validate();
+        LOGGER.debug("Command {} validated.", this.getClass().toString());
+        execute();
         LOGGER.info("Command {} executed.", this.getClass().toString());
     }
 }

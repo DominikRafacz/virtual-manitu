@@ -2,7 +2,9 @@ package fun.dr.ktulu.bot.listeners;
 
 import fun.dr.ktulu.messaging.MessageManager;
 import fun.dr.ktulu.messaging.command.Command;
+import fun.dr.ktulu.messaging.command.ExecutionException;
 import fun.dr.ktulu.messaging.command.UnknownCommandException;
+import fun.dr.ktulu.messaging.command.ValidationException;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.events.GenericEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
@@ -23,10 +25,16 @@ public class MessageListener implements EventListener {
             if (MessageManager.isCommand(message)) {
                 LOGGER.debug("Detected command.");
                 try {
-                    Command.matchCommand(message).execute();
+                    Command.matchCommand(message).issue();
                 } catch (UnknownCommandException e) {
                     LOGGER.warn("Command not recognized!");
                     message.getChannel().sendMessage("Nie znam takiego polecenia!").queue();
+                } catch (ExecutionException e) {
+                    LOGGER.error("Execution exception raised!");
+                    e.printStackTrace();
+                } catch (ValidationException e) {
+                    LOGGER.warn("Validation exception raised!");
+                    message.getChannel().sendMessage("Nieodpowiednie użycie komendy!").queue();
                 }
             }
         }
