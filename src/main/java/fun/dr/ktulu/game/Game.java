@@ -80,6 +80,7 @@ public class Game {
                 .collect(Collectors.toList());
         if (duplicates.size() == 0) {
             roles.addAll(rolesToAdd);
+            LOGGER.info("Added some roles.");
         } else throw new ExecutionException("Sorrrry, ktoś już dodał te role: " +
                 String.join(", ", duplicates));
     }
@@ -90,6 +91,7 @@ public class Game {
                 .collect(Collectors.toList());
         if (notPresent.size() == 0) {
             roles.removeAll(rolesToRemove);
+            LOGGER.info("Removed some roles.");
         } else throw new ExecutionException("Coś jest nie tak. Tych roli nie ma: " +
                 String.join(", ", notPresent));
     }
