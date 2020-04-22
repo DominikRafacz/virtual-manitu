@@ -13,4 +13,5 @@ repositories {
 dependencies {
     testImplementation group: 'junit', name: 'junit', version: '4.12'
     implementation 'net.dv8tion:JDA:4.1.1_137'
+    implementation group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1.1'
 }
