@@ -5,10 +5,13 @@ import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageChannel;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public abstract class Command {
     protected final Message message;
     protected final MessageChannel channel;
+    protected static final Logger LOGGER = LoggerFactory.getLogger(Command.class);
 
     protected Command(@NotNull Message message) {
         this.message = message;
@@ -25,4 +28,7 @@ public abstract class Command {
     }
 
     public abstract void execute();
+    protected void logExecution() {
+        LOGGER.info("Command {} executed.", this.getClass().toString());
+    }
 }

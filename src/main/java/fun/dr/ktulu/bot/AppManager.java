@@ -21,15 +21,14 @@ import java.util.List;
 public class AppManager {
 
     private static AppManager INSTANCE = null;
-    private final static String CONFIG_FILE = "src/main/resources/config.json";
-    private final Logger logger;
+    private static final String CONFIG_FILE = "src/main/resources/config.json";
+    private static final Logger LOGGER = LoggerFactory.getLogger(AppManager.class);
     private String BOT_TOKEN;
     private JDA jda;
 
     private AppManager() {
-        logger = LoggerFactory.getLogger(AppManager.class);
         loadConfig();
-        logger.info("Instantiated successfully.");
+        LOGGER.info("Instantiated successfully.");
     }
 
     public static AppManager getInstance() {
@@ -58,11 +57,11 @@ public class AppManager {
                             CacheFlag.CLIENT_STATUS
                     ))
                     .build();
-            logger.info("JDA built.");
+            LOGGER.info("JDA built.");
             jda.awaitReady();
-            logger.info("JDA loaded.");
+            LOGGER.info("JDA loaded.");
         } catch (LoginException | InterruptedException e) {
-            logger.error("Error during JDA building!");
+            LOGGER.error("Error during JDA building!");
             e.printStackTrace();
         }
     }
@@ -71,9 +70,9 @@ public class AppManager {
         try {
             JSONObject json = (JSONObject) new JSONParser().parse(new FileReader(CONFIG_FILE));
             BOT_TOKEN = (String) json.get("BOT_TOKEN");
-            logger.info("Loaded config.");
+            LOGGER.info("Loaded config.");
         } catch (IOException | ParseException e) {
-            logger.error("Cannot load config.");
+            LOGGER.error("Cannot load config.");
             e.printStackTrace();
         }
     }

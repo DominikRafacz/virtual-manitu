@@ -13,19 +13,19 @@ import org.slf4j.LoggerFactory;
 import javax.annotation.Nonnull;
 
 public class MessageListener implements EventListener {
-    private final Logger logger = LoggerFactory.getLogger(MessageManager.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(MessageManager.class);
 
     @Override
     public void onEvent(@Nonnull GenericEvent event) {
         if (event instanceof MessageReceivedEvent) {
-            logger.debug("Received message.");
+            LOGGER.debug("Received message.");
             Message message = ((MessageReceivedEvent) event).getMessage();
             if (MessageManager.isCommand(message)) {
-                logger.debug("Detected command.");
+                LOGGER.debug("Detected command.");
                 try {
                     Command.matchCommand(message).execute();
                 } catch (UnknownCommandException e) {
-                    logger.warn("Command not recognized!");
+                    LOGGER.warn("Command not recognized!");
                     message.getChannel().sendMessage("Nie znam takiego polecenia!").queue();
                 }
             }
