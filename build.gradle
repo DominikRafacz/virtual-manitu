@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id 'application'
 }
 
 group 'fun.dr.ktulu'
@@ -15,4 +16,8 @@ dependencies {
     implementation 'net.dv8tion:JDA:4.1.1_137'
     implementation group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1.1'
     implementation group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.30'
+}
+
+application {
+    mainClassName = 'fun.dr.ktulu.bot.AppStarter'
 }
