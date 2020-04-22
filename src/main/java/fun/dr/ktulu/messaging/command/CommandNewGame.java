@@ -1,8 +1,7 @@
 package fun.dr.ktulu.messaging.command;
 
-import fun.dr.ktulu.bot.AppManager;
 import fun.dr.ktulu.game.Game;
-import fun.dr.ktulu.messaging.MessageManager;
+import fun.dr.ktulu.messaging.command.exception.ValidationException;
 import net.dv8tion.jda.api.entities.ChannelType;
 import net.dv8tion.jda.api.entities.Message;
 
@@ -31,7 +30,7 @@ public class CommandNewGame extends Command {
     @Override
     protected void sendSuccessMessage() {
         game.getGameChannel()
-                .sendMessage("Nowa gra! To będzie kanał gry, " + game.getManitu().getAsMember().getAsMention() + " będzie manitować!")
+                .sendMessage("Nowa gra! Tutaj będzie kanał gry, " + game.getManitu().getAsMember().getAsMention() + " będzie manitować!")
                 .queue(s -> message.getChannel().sendMessage("Rozpoczynamy przygotowania do gry!").queue());
     }
 

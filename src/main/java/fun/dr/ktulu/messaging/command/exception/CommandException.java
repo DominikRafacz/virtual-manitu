@@ -1,15 +1,15 @@
-package fun.dr.ktulu.messaging.command;
+package fun.dr.ktulu.messaging.command.exception;
 
 import net.dv8tion.jda.api.entities.MessageChannel;
 
-public class ValidationException extends Exception {
+public class CommandException extends Exception {
     private String botMessage;
 
-    public ValidationException() {
+    public CommandException() {
         super();
     }
 
-    public ValidationException(String botMessage) {
+    public CommandException(String botMessage) {
         super();
         this.botMessage = botMessage;
     }

@@ -1,4 +1,4 @@
-package fun.dr.ktulu.messaging.command;
+package fun.dr.ktulu.messaging.command.exception;
 
 public class UnknownCommandException extends Throwable {
     private final String commandMessage;
