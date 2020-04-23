@@ -28,31 +28,6 @@ public abstract class Command {
         this.game = Game.getInstance();
     }
 
-    @Contract("_ -> new")
-    public static @NotNull Command matchCommand(Message message) throws UnknownCommandException {
-        String commandText = MessageManager.extractCommandText(message);
-        switch (commandText) {
-            case "ping":
-                return new CommandPing(message);
-            case "nowa_gra":
-                return new CommandNewGame(message);
-            case "dodaj_role":
-                return new CommandAddRoles(message);
-            case "wypisz_role":
-                return new CommandPrintRoles(message);
-            case "usuń_role":
-                return new CommandRemoveRoles(message);
-            case "chcę_grać":
-                return new CommandWantToPlay(message);
-            case "rozlosuj_role":
-                return new CommandRandomizeRoles(message);
-            case "koniec_gry":
-                return new CommandEndGame(message);
-            default:
-                throw new UnknownCommandException(commandText);
-        }
-    }
-
     public void issue() throws ValidationException, ExecutionException {
         validate();
         LOGGER.debug("Command {} validated.", this.getClass().toString());

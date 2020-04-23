@@ -1,5 +1,7 @@
 package fun.dr.ktulu.messaging;
 
+import fun.dr.ktulu.messaging.command.*;
+import fun.dr.ktulu.messaging.command.exception.UnknownCommandException;
 import net.dv8tion.jda.api.entities.Message;
 import org.jetbrains.annotations.NotNull;
 
@@ -32,5 +34,29 @@ public class MessageManager {
                         .split(" ")));
         args.remove(0);
         return args;
+    }
+
+    public static @NotNull Command matchCommand(Message message) throws UnknownCommandException {
+        String commandText = MessageManager.extractCommandText(message);
+        switch (commandText) {
+            case "ping":
+                return new CommandPing(message);
+            case "nowa_gra":
+                return new CommandNewGame(message);
+            case "dodaj_role":
+                return new CommandAddRoles(message);
+            case "wypisz_role":
+                return new CommandPrintRoles(message);
+            case "usuń_role":
+                return new CommandRemoveRoles(message);
+            case "chcę_grać":
+                return new CommandWantToPlay(message);
+            case "rozlosuj_role":
+                return new CommandRandomizeRoles(message);
+            case "koniec_gry":
+                return new CommandEndGame(message);
+            default:
+                throw new UnknownCommandException(commandText);
+        }
     }
 }

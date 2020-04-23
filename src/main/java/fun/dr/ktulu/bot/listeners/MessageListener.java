@@ -25,7 +25,7 @@ public class MessageListener implements EventListener {
             if (MessageManager.isCommand(message)) {
                 LOGGER.debug("Detected command.");
                 try {
-                    Command.matchCommand(message).issue();
+                    MessageManager.matchCommand(message).issue();
                 } catch (UnknownCommandException e) {
                     LOGGER.warn("Command not recognized!");
                     message.getChannel().sendMessage("Nie znam takiego polecenia!").queue();
