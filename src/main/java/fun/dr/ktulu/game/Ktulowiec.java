@@ -20,4 +20,9 @@ public class Ktulowiec {
                 .getGuildById(Game.getInstance().getGuildID()))
                 .getMemberById(userID);
     }
+
+    public String getTempName() {
+        Member member = getAsMember();
+        return member.getNickname() == null ? member.getUser().getName() : member.getNickname();
+    }
 }

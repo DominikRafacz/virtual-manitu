@@ -5,6 +5,7 @@ import fun.dr.ktulu.messaging.MessageManager;
 import fun.dr.ktulu.messaging.command.exception.ExecutionException;
 import fun.dr.ktulu.messaging.command.exception.UnknownCommandException;
 import fun.dr.ktulu.messaging.command.exception.ValidationException;
+import net.dv8tion.jda.api.entities.ChannelType;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageChannel;
 import org.jetbrains.annotations.Contract;
@@ -41,6 +42,12 @@ public abstract class Command {
                 return new CommandPrintRoles(message);
             case "usuń_role":
                 return new CommandRemoveRoles(message);
+            case "chcę_grać":
+                return new CommandWantToPlay(message);
+            case "rozlosuj_role":
+                return new CommandRandomizeRoles(message);
+            case "koniec_gry":
+                return new CommandEndGame(message);
             default:
                 throw new UnknownCommandException(commandText);
         }
@@ -79,5 +86,10 @@ public abstract class Command {
         if (!message.getChannel().getId().equals(game.getManituChannelID()))
             throw new ValidationException("Ekhm. To nie miejsce na to. Polecam iść na kanał Manitu: " +
                     game.getManituChannel().getAsMention());
+    }
+
+    protected void validateIsPrivateChannel() throws ValidationException {
+        if (message.getChannel().getType() != ChannelType.PRIVATE)
+            throw new ValidationException("Ta komenda powinna być użyta w prywatnej wiadomosci. Ostentacyjnie ją zignoruję");
     }
 }

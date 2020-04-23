@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 
 public class Game {
@@ -20,13 +21,13 @@ public class Game {
     private static Game INSTANCE;
 
     @Getter
-    private Set<Player> players;
+    private final List<Player> players;
 
     @Getter
     private Manitu manitu;
 
     @Getter
-    private Set<String> roles;
+    private final List<String> roles;
 
     @Getter
     private GameStage gameStage;
@@ -42,8 +43,8 @@ public class Game {
 
     private Game() {
         LOGGER.info("Game instantiated.");
-        players = new HashSet<>();
-        roles = new HashSet<>();
+        players = new ArrayList<>();
+        roles = new ArrayList<>();
         gameStage = GameStage.NOT_INITIATED;
     }
 
@@ -94,6 +95,31 @@ public class Game {
             LOGGER.info("Removed some roles.");
         } else throw new ExecutionException("Coś jest nie tak. Tych roli nie ma: " +
                 String.join(", ", notPresent));
+    }
+
+    public void addPlayer(String userID, String communicationChannelID) {
+        players.add(new Player(userID, communicationChannelID));
+    }
+
+    public void assignRoles() {
+        Random random = new Random();
+        List<Integer> sequence = IntStream.range(0, players.size()).boxed().collect(Collectors.toList());
+        for (Player player : players) {
+            player.setRole(roles.get(sequence.remove(random.nextInt(sequence.size()))));
+        }
+        gameStage = GameStage.ONGOING;
+        LOGGER.info("Randomized and assigned roles.");
+    }
+
+    public void reset() {
+        gameStage = GameStage.NOT_INITIATED;
+        this.players.clear();
+        this.roles.clear();
+        this.manitu = null;
+        this.gameChannelID = null;
+        this.manituChannelID = null;
+        this.guildID = null;
+        LOGGER.info("Restored NOT_INITIATED game state.");
     }
 
     public enum GameStage {

@@ -4,10 +4,10 @@ import fun.dr.ktulu.game.Game;
 import fun.dr.ktulu.messaging.command.exception.ValidationException;
 import net.dv8tion.jda.api.entities.Message;
 
-import java.util.Set;
+import java.util.List;
 
 public class CommandPrintRoles extends Command {
-    private Set<String> roles;
+    private List<String> roles;
 
     public CommandPrintRoles(Message message) {
         super(message);
