@@ -36,6 +36,14 @@ public class MessageManager {
         return args;
     }
 
+    public static @NotNull String extractAllButCommandText(@NotNull Message message) {
+        String content = message.getContentRaw();
+        int spaceIndex = content.indexOf(" ");
+        if (spaceIndex == -1)
+            return "";
+        return message.getContentRaw().substring(spaceIndex + 1);
+    }
+
     public static @NotNull Command matchCommand(Message message) throws UnknownCommandException {
         String commandText = MessageManager.extractCommandText(message);
         switch (commandText) {
@@ -53,6 +61,8 @@ public class MessageManager {
                 return new CommandWantToPlay(message);
             case "rozlosuj_role":
                 return new CommandRandomizeRoles(message);
+            case "ginie":
+                return new CommandKill(message);
             case "koniec_gry":
                 return new CommandEndGame(message);
             default:

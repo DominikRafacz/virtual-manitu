@@ -3,9 +3,7 @@ package fun.dr.ktulu.game;
 import fun.dr.ktulu.bot.AppManager;
 import fun.dr.ktulu.messaging.command.exception.ExecutionException;
 import lombok.Getter;
-import lombok.Setter;
-import net.dv8tion.jda.api.entities.MessageChannel;
-import net.dv8tion.jda.api.entities.Role;
+import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.TextChannel;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
@@ -54,6 +52,10 @@ public class Game {
 
     public TextChannel getManituChannel() {
         return AppManager.getInstance().getJda().getTextChannelById(manituChannelID);
+    }
+
+    public Guild getGuild() {
+        return AppManager.getInstance().getJda().getGuildById(guildID);
     }
 
     public static Game getInstance() {
@@ -120,6 +122,18 @@ public class Game {
         this.manituChannelID = null;
         this.guildID = null;
         LOGGER.info("Restored NOT_INITIATED game state.");
+    }
+
+    public void killPlayer(String playerID) throws ExecutionException {
+        Optional<Player> playerToKill = players.stream()
+                .filter(player -> player.getUserID().equals(playerID))
+                .findFirst();
+        if (playerToKill.isEmpty())
+            throw new ExecutionException("Gracz o takim ID nie gra, soreczka.");
+        Player player = playerToKill.get();
+        if (!player.isAlive())
+            throw new ExecutionException("Ten gracz jest już martwy. I na zewnątrz, i w środeczku");
+        player.setAlive(false);
     }
 
     public enum GameStage {

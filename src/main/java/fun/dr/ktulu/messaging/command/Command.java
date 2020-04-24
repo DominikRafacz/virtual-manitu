@@ -1,14 +1,11 @@
 package fun.dr.ktulu.messaging.command;
 
 import fun.dr.ktulu.game.Game;
-import fun.dr.ktulu.messaging.MessageManager;
 import fun.dr.ktulu.messaging.command.exception.ExecutionException;
-import fun.dr.ktulu.messaging.command.exception.UnknownCommandException;
 import fun.dr.ktulu.messaging.command.exception.ValidationException;
 import net.dv8tion.jda.api.entities.ChannelType;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageChannel;
-import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -55,6 +52,11 @@ public abstract class Command {
         if (game.getGameStage() != Game.GameStage.SETUP)
             throw new ValidationException("Żeby użyć tej komendy, gra powinna być w fazie przygotowania. " +
                     "A nie jest. No, inaczej bym tego nie pisał.");
+    }
+
+    protected void validateIsOngoingStage() throws ValidationException {
+        if (game.getGameStage() != Game.GameStage.ONGOING)
+            throw new ValidationException("Nie zabijamy poza grą. Szanujmy się.");
     }
 
     protected void validateIsManituChannel() throws ValidationException {

@@ -12,9 +12,14 @@ public class Player extends Ktulowiec {
     @Setter
     private String role;
 
+    @Getter
+    @Setter
+    private boolean alive;
+
     public Player(String playerID, String communicationChannelID) {
         super(playerID);
         this.communicationChannelID = communicationChannelID;
+        this.alive = true;
     }
 
     public PrivateChannel getCommunicationChannel() {
