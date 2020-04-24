@@ -101,6 +101,7 @@ public class Game {
 
     public void addPlayer(String userID, String communicationChannelID) {
         players.add(new Player(userID, communicationChannelID));
+        LOGGER.info("Added player.");
     }
 
     public void assignRoles() {
@@ -134,6 +135,7 @@ public class Game {
         if (!player.isAlive())
             throw new ExecutionException("Ten gracz jest już martwy. I na zewnątrz, i w środeczku");
         player.setAlive(false);
+        LOGGER.info("Killed.");
     }
 
     public enum GameStage {
