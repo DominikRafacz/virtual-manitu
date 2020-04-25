@@ -42,20 +42,27 @@ public abstract class VotingEvent extends SpecialEvent {
                                 .map(Ktulowiec::getTempName)
                                 .collect(Collectors.joining(", ")))
                 .collect(Collectors.joining("\n")) +
-                "\n Zwycięża opcja: " + getResults().toString() + "! Gratulacje! :DDD";
+                "\n Zwycięża opcja/opcje: " + getResults().stream()
+                .map(VotingOption::toString)
+                .collect(Collectors.joining(", ")) + "! Gratulacje! :DDD";
     }
 
     public Map<VotingOption, Integer> getSummary() {
         Map<VotingOption, Integer> summary = new HashMap<>();
         options.forEach(option -> summary.put(option, (int) votes.keySet().stream()
-                        .filter(voter -> votes.get(voter) == option).count()));
+                .filter(voter -> votes.get(voter) == option).count()));
         return summary;
     }
 
-    public VotingOption getResults() {
+    public List<VotingOption> getResults() {
         Map<VotingOption, Integer> summary = getSummary();
-        return summary.keySet().stream()
-                .max(Comparator.comparingInt(summary::get)).get();
+        int numWinner = summary.keySet().stream()
+                .mapToInt(summary::get)
+                .max()
+                .orElse(-1);
 
+        return summary.keySet().stream()
+                .filter(option -> summary.get(option) == numWinner)
+                .collect(Collectors.toList());
     }
 }
