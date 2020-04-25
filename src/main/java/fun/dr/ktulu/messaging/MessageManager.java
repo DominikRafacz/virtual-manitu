@@ -59,8 +59,10 @@ public class MessageManager {
                 return new CommandKill(message);
             case "koniec_gry":
                 return new CommandEndGame(message);
-            case "głosujemy_nad_przeszukaniem":
-                return new CommandVotingSearch(message);
+            case "głosujemy_kogo_przeszukać":
+                return new CommandVotingWhoToSearch(message);
+            case "głosujemy_czy_wieszać":
+                return new CommandVotingIfToHang(message);
             case "głosuję_na":
                 return new CommandVote(message);
             default:

@@ -154,9 +154,22 @@ public class Game {
         LOGGER.info("Began voting on who to search.");
     }
 
+    public void startVotingIfToHang() {
+        specialEvent = new VotingIfToHang(
+                players.stream()
+                        .filter(Player::isAlive)
+                        .collect(Collectors.toList()));
+        LOGGER.info("Began voting on if to hang");
+    }
+
     public void vote(Player voter, VotingOption votingOption) {
         ((VotingEvent) specialEvent).vote(voter, votingOption);
         LOGGER.info("Voted.");
+    }
+
+    public void endVoting() {
+        specialEvent = null;
+        LOGGER.info("Ended voting.");
     }
 
     public enum GameStage {

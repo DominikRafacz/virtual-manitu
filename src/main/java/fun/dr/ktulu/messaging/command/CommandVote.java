@@ -36,7 +36,7 @@ public class CommandVote extends Command {
             throw new ValidationException("Już oddałeś/łaś/łoś głos!");
         args = MessageManager.extractArgs(message);
         if (args.size() != 1)
-            throw new ValidationException("Powinnieneś wybrać dokładnie jedną opcję, ni mniej, ni więcej.");
+            throw new ValidationException("Powinieneś wybrać dokładnie jedną opcję, ni mniej, ni więcej.");
         Optional<VotingOption> potentialOption = ((VotingEvent) game.getSpecialEvent()).getOptions().stream()
                 .filter(option -> option.toString().equals(args.get(0)))
                 .findFirst();
@@ -59,9 +59,11 @@ public class CommandVote extends Command {
         message.getChannel().sendMessage("taaajest!")
                 .queue(message -> game.getManituChannel().sendMessage("Kolejny zagłosował!")
                         .queue(messageB -> {
-                            if (voting.everyoneVoted())
+                            if (voting.everyoneVoted()) {
                                 game.getGameChannel().sendMessage("Mamy wyniki głosowania!\n" +
                                         voting.getResultsFormatted()).queue();
+                                game.endVoting();
+                            }
                         }));
 
     }

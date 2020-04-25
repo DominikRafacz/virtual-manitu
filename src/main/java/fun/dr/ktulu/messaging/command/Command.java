@@ -2,23 +2,17 @@ package fun.dr.ktulu.messaging.command;
 
 import fun.dr.ktulu.game.Game;
 import fun.dr.ktulu.game.Player;
-import fun.dr.ktulu.game.event.VotingEvent;
-import fun.dr.ktulu.game.event.VotingOption;
 import fun.dr.ktulu.messaging.command.exception.ExecutionException;
 import fun.dr.ktulu.messaging.command.exception.ValidationException;
 import net.dv8tion.jda.api.entities.ChannelType;
-import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageChannel;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.swing.text.html.Option;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 public abstract class Command {
     protected final Message message;

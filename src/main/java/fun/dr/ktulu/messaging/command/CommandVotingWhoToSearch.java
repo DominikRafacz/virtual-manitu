@@ -11,10 +11,10 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-public class CommandVotingSearch extends Command {
+public class CommandVotingWhoToSearch extends Command {
     private List<Player> searchCandidates;
 
-    public CommandVotingSearch(Message message) {
+    public CommandVotingWhoToSearch(Message message) {
         super(message);
     }
 
