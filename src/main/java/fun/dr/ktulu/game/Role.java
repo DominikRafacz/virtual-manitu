@@ -1,6 +1,7 @@
 package fun.dr.ktulu.game;
 
 import fun.dr.ktulu.game.exception.RoleNotMatchedException;
+import fun.dr.ktulu.messaging.command.exception.ValidationException;
 import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
 
@@ -27,7 +28,7 @@ public enum Role {
     PLONACY_SZAL("Płonący Szał", INDIANIE),
     SZAMANKA("Szamanka", INDIANIE),
     WOJOWNIK("Wojownik", INDIANIE),
-    CICHA_STOPA("Chicha Stopa", INDIANIE),
+    CICHA_STOPA("Cicha Stopa", INDIANIE),
     LORNECIE_OKO("Lornecie Oko", INDIANIE),
     DETEKTOR("Detektor", UFOLE),
     POZERACZ_UMYSLOW("Pożeracz Umysłów", UFOLE),
