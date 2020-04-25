@@ -8,13 +8,23 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class VotingPersonal extends VotingEvent{
-    protected final List<Player> candidates;
 
     protected VotingPersonal(@NotNull List<Player> candidates, @NotNull List<Player> voters) {
-        super(candidates.stream()
+        this(candidates, voters, false);
+    }
+
+    protected VotingPersonal(@NotNull List<Player> candidates, @NotNull List<Player> voters, boolean allowAbstain) {
+        super(getVotingOptions(candidates, allowAbstain), voters);
+    }
+
+    private static List<VotingOption> getVotingOptions(@NotNull List<Player> candidates, boolean allowAbstain) {
+        List<VotingOption> votingOptions = candidates.stream()
                 .map(Ktulowiec::getTempName)
                 .map(VotingOptionPlayer::new)
-                .collect(Collectors.toList()), voters);
-        this.candidates = candidates;
+                .collect(Collectors.toList());
+        if (allowAbstain) {
+            votingOptions.add(VotingOptionAbstain.getOPTION());
+        }
+        return votingOptions;
     }
 }

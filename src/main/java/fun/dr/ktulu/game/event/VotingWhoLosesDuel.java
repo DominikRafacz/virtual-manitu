@@ -6,6 +6,6 @@ import java.util.List;
 
 public class VotingWhoLosesDuel extends VotingPersonal {
     public VotingWhoLosesDuel(List<Player> duelers, List<Player> voters) {
-        super(duelers, voters);
+        super(duelers, voters, true);
     }
 }
