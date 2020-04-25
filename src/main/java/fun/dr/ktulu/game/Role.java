@@ -37,6 +37,7 @@ public enum Role {
     DOBRY_REWOLWEROWIEC("Dobry Rewolwerowiec", MIASTO),
     LEKARZ("Lekarz", MIASTO),
     SEDZIA("Sędzia", MIASTO),
+    BURMISTRZ("Burmistrz", MIASTO),
     HERSZT("Herszt", BANDYCI),
     ZLY_REWOLWEROWIEC("Zły Rewolwerowiec", BANDYCI),
     WODZ("Wódz", INDIANIE),
