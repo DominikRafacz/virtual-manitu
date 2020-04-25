@@ -10,7 +10,7 @@ public class Player extends Ktulowiec {
 
     @Getter
     @Setter
-    private String role;
+    private Role role;
 
     @Getter
     @Setter

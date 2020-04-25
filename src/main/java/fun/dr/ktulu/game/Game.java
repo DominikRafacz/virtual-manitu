@@ -26,7 +26,7 @@ public class Game {
     private Manitu manitu;
 
     @Getter
-    private final List<String> roles;
+    private final List<Role> roles;
 
     @Getter
     private GameStage gameStage;
@@ -81,26 +81,30 @@ public class Game {
         LOGGER.info("Game initiated!");
     }
 
-    public void addRoles(@NotNull Collection<String> rolesToAdd) throws ExecutionException {
-        List<String> duplicates = roles.stream()
+    public void addRoles(@NotNull Collection<Role> rolesToAdd) throws ExecutionException {
+        List<Role> duplicates = roles.stream()
                 .filter(rolesToAdd::contains)
                 .collect(Collectors.toList());
         if (duplicates.size() == 0) {
             roles.addAll(rolesToAdd);
             LOGGER.info("Added some roles.");
         } else throw new ExecutionException("Sorrrry, ktoś już dodał te role: " +
-                String.join(", ", duplicates));
+                duplicates.stream()
+                        .map(Role::getName)
+                        .collect(Collectors.joining(", ")));
     }
 
-    public void removeRoles(@NotNull Collection<String> rolesToRemove) throws ExecutionException {
-        List<String> notPresent = rolesToRemove.stream()
+    public void removeRoles(@NotNull Collection<Role> rolesToRemove) throws ExecutionException {
+        List<Role> notPresent = rolesToRemove.stream()
                 .filter(role -> !roles.contains(role))
                 .collect(Collectors.toList());
         if (notPresent.size() == 0) {
             roles.removeAll(rolesToRemove);
             LOGGER.info("Removed some roles.");
         } else throw new ExecutionException("Coś jest nie tak. Tych roli nie ma: " +
-                String.join(", ", notPresent));
+                notPresent.stream()
+                        .map(Role::getName)
+                        .collect(Collectors.joining(", ")));
     }
 
     public void addPlayer(@NotNull String userID, @NotNull String communicationChannelID) {

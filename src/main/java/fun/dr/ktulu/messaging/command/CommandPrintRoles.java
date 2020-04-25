@@ -1,13 +1,16 @@
 package fun.dr.ktulu.messaging.command;
 
 import fun.dr.ktulu.game.Game;
+import fun.dr.ktulu.game.Role;
 import fun.dr.ktulu.messaging.command.exception.ValidationException;
 import net.dv8tion.jda.api.entities.Message;
 
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class CommandPrintRoles extends Command {
-    private List<String> roles;
+    private List<Role> roles;
 
     public CommandPrintRoles(Message message) {
         super(message);
@@ -26,6 +29,7 @@ public class CommandPrintRoles extends Command {
 
     @Override
     protected void sendSuccessMessage() {
-        sendResponseMessage("W tej grze mamy następujące role: " + String.join(", ", roles));
+        sendResponseMessage("W tej grze mamy następujące role: " +
+                roles.stream().map(Role::getName).collect(Collectors.joining(", ")));
     }
 }
