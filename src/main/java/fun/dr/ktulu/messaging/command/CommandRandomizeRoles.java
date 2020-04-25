@@ -34,12 +34,12 @@ public class CommandRandomizeRoles extends Command {
     @Override
     protected void sendSuccessMessage() {
         for (Player player : game.getPlayers()) {
-            player.getCommunicationChannel().sendMessage("Twoja rola to: " + player.getRole()).queue();
+            player.getCommunicationChannel().sendMessage("Twoja rola to: " + player.getRole().getName()).queue();
         }
         sendResponseMessage("Oto role i ich gracze:\n" +
                 game.getPlayers()
                         .stream()
-                        .map(player -> player.getTempName() + " -- " + player.getRole() + "\n")
+                        .map(player -> player.getTempName() + " -- " + player.getRole().getName() + "\n")
                         .collect(Collectors.joining()));
     }
 }

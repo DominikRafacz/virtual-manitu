@@ -43,31 +43,33 @@ public class MessageManager {
         switch (commandText) {
             case "ping":
                 return new CommandPing(message);
-            case "nowa_gra":
+            case "nowa-gra":
                 return new CommandNewGame(message);
-            case "dodaj_role":
+            case "dodaj-role":
                 return new CommandAddRoles(message);
-            case "wypisz_role":
+            case "wypisz-role":
                 return new CommandPrintRoles(message);
-            case "usuń_role":
+            case "usuń-role":
                 return new CommandRemoveRoles(message);
-            case "chcę_grać":
+            case "chcę-grać":
                 return new CommandWantToPlay(message);
-            case "rozlosuj_role":
+            case "rozlosuj-role":
                 return new CommandRandomizeRoles(message);
+            case "wypisz-kto-żyje":
+                return new CommandPrintAliveRoles(message);
             case "ginie":
                 return new CommandKill(message);
-            case "koniec_gry":
+            case "koniec-gry":
                 return new CommandEndGame(message);
-            case "głosujemy_kogo_przeszukać":
+            case "głosujemy-kogo-przeszukać":
                 return new CommandVotingWhoToSearch(message);
-            case "głosujemy_czy_wieszać":
+            case "głosujemy-czy-wieszać":
                 return new CommandVotingIfToHang(message);
-            case "głosujemy_kogo_wieszać":
+            case "głosujemy-kogo-wieszać":
                 return new CommandVotingWhoToHang(message);
-            case "głosujemy_kto_przegrywa_pojedynek":
+            case "głosujemy-kto-przegrywa-pojedynek":
                 return new CommandVotingWhoLosesDuel(message);
-            case "głosuję_na":
+            case "głosuję-na":
                 return new CommandVote(message);
             default:
                 throw new UnknownCommandException(commandText);

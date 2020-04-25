@@ -202,6 +202,12 @@ public class Game {
         LOGGER.info("Began voting on who loses the duel.");
     }
 
+    public HashMap<Role, Boolean> getRolesStatus() {
+        HashMap<Role, Boolean> status = new HashMap<>();
+        players.forEach(player -> status.put(player.getRole(), player.isAlive()));
+        return status;
+    }
+
     public enum GameStage {
         NOT_INITIATED,
         SETUP,
