@@ -172,6 +172,19 @@ public class Game {
         LOGGER.info("Ended voting.");
     }
 
+    public void startVotingWhoToHang(List<Player> hangCandidates) throws ExecutionException {
+        List<Player> aliveCandidates = hangCandidates.stream()
+                .filter(Player::isAlive)
+                .collect(Collectors.toList());
+        if (aliveCandidates.size() < 2)
+            throw new ExecutionException("Na pewno chcesz wieszać martwych... ?");
+        List<Player> aliveVoters = players.stream()
+                .filter(Player::isAlive)
+                .collect(Collectors.toList());
+        specialEvent = new VotingWhoToHang(aliveCandidates, aliveVoters);
+        LOGGER.info("Began voting on who to hang.");
+    }
+
     public enum GameStage {
         NOT_INITIATED,
         SETUP,

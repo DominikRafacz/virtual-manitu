@@ -14,6 +14,5 @@ public class VotingIfToHang extends VotingEvent {
                 VotingOptionYesNo.getNO_OPTION(),
                 VotingOptionYesNo.getYES_OPTION()
         )), voters);
-
     }
 }
