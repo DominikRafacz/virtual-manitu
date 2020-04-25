@@ -12,12 +12,12 @@ import java.util.List;
 public class MessageManager {
 
     private static final String COMMAND_PREFIX = "m!";
+    private static final String ARGS_SEPARATOR = " */ *";
 
     public static boolean isCommand(@NotNull Message message) {
         return message
                 .getContentRaw()
                 .startsWith("m!");
-
     }
 
     public static @NotNull String extractCommandText(@NotNull Message message) {
@@ -28,20 +28,14 @@ public class MessageManager {
     }
 
     public static @NotNull List<String> extractArgs(@NotNull Message message) {
-        List<String> args = new ArrayList<>(
-                Arrays.asList(message
-                        .getContentRaw()
-                        .split(" ")));
-        args.remove(0);
-        return args;
-    }
-
-    public static @NotNull String extractAllButCommandText(@NotNull Message message) {
         String content = message.getContentRaw();
         int spaceIndex = content.indexOf(" ");
         if (spaceIndex == -1)
-            return "";
-        return message.getContentRaw().substring(spaceIndex + 1);
+            return new ArrayList<>(0);
+        return new ArrayList<>(
+                Arrays.asList(
+                        content.substring(spaceIndex + 1)
+                                .split(ARGS_SEPARATOR)));
     }
 
     public static @NotNull Command matchCommand(Message message) throws UnknownCommandException {
@@ -65,6 +59,10 @@ public class MessageManager {
                 return new CommandKill(message);
             case "koniec_gry":
                 return new CommandEndGame(message);
+            case "głosujemy_nad_przeszukaniem":
+                return new CommandVotingSearch(message);
+            case "głosuję_na":
+                return new CommandVote(message);
             default:
                 throw new UnknownCommandException(commandText);
         }

@@ -1,6 +1,7 @@
 package fun.dr.ktulu.game;
 
 import fun.dr.ktulu.bot.AppManager;
+import fun.dr.ktulu.game.event.*;
 import fun.dr.ktulu.messaging.command.exception.ExecutionException;
 import lombok.Getter;
 import net.dv8tion.jda.api.entities.Guild;
@@ -29,6 +30,9 @@ public class Game {
 
     @Getter
     private GameStage gameStage;
+
+    @Getter
+    private SpecialEvent specialEvent;
 
     @Getter
     private String manituChannelID;
@@ -65,10 +69,10 @@ public class Game {
         return INSTANCE;
     }
 
-    public void initiate(String guildID,
-                         String manituID,
-                         String manituChannelID,
-                         String gameChannelID) {
+    public void initiate(@NotNull String guildID,
+                         @NotNull String manituID,
+                         @NotNull String manituChannelID,
+                         @NotNull String gameChannelID) {
         gameStage = GameStage.SETUP;
         this.guildID = guildID;
         this.manituChannelID = manituChannelID;
@@ -99,7 +103,7 @@ public class Game {
                 String.join(", ", notPresent));
     }
 
-    public void addPlayer(String userID, String communicationChannelID) {
+    public void addPlayer(@NotNull String userID, @NotNull String communicationChannelID) {
         players.add(new Player(userID, communicationChannelID));
         LOGGER.info("Added player.");
     }
@@ -122,20 +126,37 @@ public class Game {
         this.gameChannelID = null;
         this.manituChannelID = null;
         this.guildID = null;
+        this.specialEvent = null;
         LOGGER.info("Restored NOT_INITIATED game state.");
     }
 
-    public void killPlayer(String playerID) throws ExecutionException {
-        Optional<Player> playerToKill = players.stream()
-                .filter(player -> player.getUserID().equals(playerID))
-                .findFirst();
-        if (playerToKill.isEmpty())
-            throw new ExecutionException("Gracz o takim ID nie gra, soreczka.");
-        Player player = playerToKill.get();
-        if (!player.isAlive())
+    public void killPlayer(@NotNull Player playerToKill) throws ExecutionException {
+        if (!playerToKill.isAlive())
             throw new ExecutionException("Ten gracz jest już martwy. I na zewnątrz, i w środeczku");
-        player.setAlive(false);
+        playerToKill.setAlive(false);
         LOGGER.info("Killed.");
+    }
+
+    public boolean isVotingOn() {
+        return specialEvent instanceof VotingEvent;
+    }
+
+    public void startVotingWhoToSearch(@NotNull List<Player> searchCandidates) throws ExecutionException {
+        List<Player> aliveCandidates = searchCandidates.stream()
+                .filter(Player::isAlive)
+                .collect(Collectors.toList());
+        if (aliveCandidates.size() < 3)
+            throw new ExecutionException("Co najmniej jeden z przeszukiwanych jest martwy. Nie ma grabieży zwłok. Ponownej.");
+        List<Player> aliveVoters = players.stream()
+                .filter(Player::isAlive)
+                .collect(Collectors.toList());
+        specialEvent = new VotingWhoToSearch(aliveCandidates, aliveVoters);
+        LOGGER.info("Began voting on who to search.");
+    }
+
+    public void vote(Player voter, VotingOption votingOption) {
+        ((VotingEvent) specialEvent).vote(voter, votingOption);
+        LOGGER.info("Voted.");
     }
 
     public enum GameStage {

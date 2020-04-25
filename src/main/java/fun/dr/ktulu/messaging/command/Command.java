@@ -1,16 +1,24 @@
 package fun.dr.ktulu.messaging.command;
 
 import fun.dr.ktulu.game.Game;
+import fun.dr.ktulu.game.Player;
+import fun.dr.ktulu.game.event.VotingEvent;
+import fun.dr.ktulu.game.event.VotingOption;
 import fun.dr.ktulu.messaging.command.exception.ExecutionException;
 import fun.dr.ktulu.messaging.command.exception.ValidationException;
 import net.dv8tion.jda.api.entities.ChannelType;
+import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageChannel;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.swing.text.html.Option;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 public abstract class Command {
     protected final Message message;
@@ -68,5 +76,23 @@ public abstract class Command {
     protected void validateIsPrivateChannel() throws ValidationException {
         if (message.getChannel().getType() != ChannelType.PRIVATE)
             throw new ValidationException("Ta komenda powinna być użyta w prywatnej wiadomosci. Ostentacyjnie ją zignoruję");
+    }
+
+    protected void validateNoVotingOn() throws ValidationException {
+        if (game.isVotingOn())
+            throw new ValidationException("Już trwa jedno głosowanko!");
+    }
+
+    protected void validateVotingOn() throws ValidationException {
+        if (!game.isVotingOn())
+            throw new ValidationException("Bez głosowania, nie ma oddawania głosu. Bez oddania głosu... nie ma oddania głosu.");
+    }
+
+    protected Player findPlayerByNameIfExists(String name) {
+        Optional<Player> potentialPlayer = game.getPlayers().stream()
+                .filter(player -> player.getTempName().equals(name))
+                .findFirst();
+        if (potentialPlayer.isEmpty()) return null;
+        return potentialPlayer.get();
     }
 }
