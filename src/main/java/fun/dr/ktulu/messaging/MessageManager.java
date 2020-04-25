@@ -65,6 +65,8 @@ public class MessageManager {
                 return new CommandVotingIfToHang(message);
             case "głosujemy_kogo_wieszać":
                 return new CommandVotingWhoToHang(message);
+            case "głosujemy_kto_przegrywa_pojedynek":
+                return new CommandVotingWhoLosesDuel(message);
             case "głosuję_na":
                 return new CommandVote(message);
             default:

@@ -172,7 +172,7 @@ public class Game {
         LOGGER.info("Ended voting.");
     }
 
-    public void startVotingWhoToHang(List<Player> hangCandidates) throws ExecutionException {
+    public void startVotingWhoToHang(@NotNull List<Player> hangCandidates) throws ExecutionException {
         List<Player> aliveCandidates = hangCandidates.stream()
                 .filter(Player::isAlive)
                 .collect(Collectors.toList());
@@ -183,6 +183,19 @@ public class Game {
                 .collect(Collectors.toList());
         specialEvent = new VotingWhoToHang(aliveCandidates, aliveVoters);
         LOGGER.info("Began voting on who to hang.");
+    }
+
+    public void startVotingWhoLosesDuel(@NotNull List<Player> duelers) throws ExecutionException {
+        List<Player> aliveDuelers = duelers.stream()
+                .filter(Player::isAlive)
+                .collect(Collectors.toList());
+        if (aliveDuelers.size() < 2)
+            throw new ExecutionException("Martwi głosu nie mają. Więc też nie mogą wyzwać nikogo. W szczególności na pojedynek");
+        List<Player> aliveVoters = players.stream()
+                .filter(Player::isAlive)
+                .collect(Collectors.toList());
+        specialEvent = new VotingWhoLosesDuel(aliveDuelers, aliveVoters);
+        LOGGER.info("Began voting on who loses the duel.");
     }
 
     public enum GameStage {

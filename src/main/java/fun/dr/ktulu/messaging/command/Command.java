@@ -89,4 +89,11 @@ public abstract class Command {
         if (potentialPlayer.isEmpty()) return null;
         return potentialPlayer.get();
     }
+
+    protected void validateVoting() throws ValidationException {
+        validateIsIssuerManitu();
+        validateIsManituChannel();
+        validateIsOngoingStage();
+        validateNoVotingOn();
+    }
 }

@@ -1,6 +1,7 @@
 package fun.dr.ktulu.messaging.command;
 
 import fun.dr.ktulu.game.Player;
+import fun.dr.ktulu.game.event.VotingEvent;
 import fun.dr.ktulu.messaging.MessageManager;
 import fun.dr.ktulu.messaging.command.exception.ExecutionException;
 import fun.dr.ktulu.messaging.command.exception.ValidationException;
@@ -19,10 +20,7 @@ public class CommandVotingWhoToHang extends Command {
 
     @Override
     protected void validate() throws ValidationException {
-        validateIsIssuerManitu();
-        validateIsManituChannel();
-        validateIsOngoingStage();
-        validateNoVotingOn();
+        validateVoting();
         args = MessageManager.extractArgs(message);
         if (args.size() != 2)
             throw new ValidationException("Propozycje powinny być dokładnie dwie. Więcej ani mniej nie obsługuję");
@@ -40,6 +38,11 @@ public class CommandVotingWhoToHang extends Command {
 
     @Override
     protected void sendSuccessMessage() {
-
+        game.getGameChannel()
+                .sendMessage("Rozpoczynamy głosowanie nad tym, kogo wieszamy (wieszanko!). Możliwe opcje:\n" +
+                        ((VotingEvent) game.getSpecialEvent()).getOptions().stream()
+                                .map(Object::toString).collect(Collectors.joining("\n")) +
+                        "\nMożna zagłosować poprzez komendę 'm!głosuję_na X', gdzie X to jedna z możliwych opcji")
+                .queue(message -> sendResponseMessage("Kości zostały rzucone. Niech lud wybierze!"));
     }
 }

@@ -13,10 +13,7 @@ public class CommandVotingIfToHang extends Command {
 
     @Override
     protected void validate() throws ValidationException {
-        validateIsIssuerManitu();
-        validateIsManituChannel();
-        validateIsOngoingStage();
-        validateNoVotingOn();
+        validateVoting();
     }
 
     @Override
