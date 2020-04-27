@@ -47,6 +47,8 @@ public class MessageManager {
                 return new CommandNewGame(message);
             case "dodaj-role":
                 return new CommandAddRoles(message);
+            case "dodaj-domyślne-role":
+                return new CommandAddDefaultRoles(message);
             case "wypisz-role":
                 return new CommandPrintRoles(message);
             case "usuń-role":
