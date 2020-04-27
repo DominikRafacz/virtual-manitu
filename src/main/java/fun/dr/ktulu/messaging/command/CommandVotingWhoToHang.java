@@ -42,7 +42,7 @@ public class CommandVotingWhoToHang extends Command {
                 .sendMessage("Rozpoczynamy głosowanie nad tym, kogo wieszamy (wieszanko!). Możliwe opcje:\n" +
                         ((VotingEvent) game.getSpecialEvent()).getOptions().stream()
                                 .map(Object::toString).collect(Collectors.joining("\n")) +
-                        "\nMożna zagłosować poprzez komendę 'm!głosuję_na X', gdzie X to jedna z możliwych opcji")
+                        "\nMożna zagłosować poprzez komendę 'm!głosuję-na X', gdzie X to jedna z możliwych opcji")
                 .queue(message -> sendResponseMessage("Kości zostały rzucone. Niech lud wybierze!"));
     }
 }
