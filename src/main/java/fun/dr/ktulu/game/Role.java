@@ -7,6 +7,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 import java.util.function.Function;
+import java.util.function.IntPredicate;
 import java.util.stream.Collectors;
 
 import static fun.dr.ktulu.game.Faction.*;
@@ -55,10 +56,10 @@ public enum Role {
     private final String name;
     @Getter
     private final Faction faction;
-    private final Function<Integer, Boolean> include;
+    private final IntPredicate include;
     private static final EnumSet<Role> ALL_ROLES = EnumSet.allOf(Role.class);
 
-    Role(String name, Faction faction, Function<Integer, Boolean> include) {
+    Role(String name, Faction faction, IntPredicate include) {
         this.name = name;
         this.faction = faction;
         this.include = include;
@@ -80,7 +81,7 @@ public enum Role {
             throw new ValidationException(
                     "Uch, to mnóstwo osób. Mogę zaproponować domyślną trzydziestkę, a resztę dodaj ręcznie.");
         return ALL_ROLES.stream()
-                .filter(role -> role.include.apply(numPlayers))
+                .filter(role -> role.include.test(numPlayers))
                 .collect(Collectors.toSet());
     }
 }
