@@ -55,7 +55,6 @@ public enum Role {
     private final String name;
     @Getter
     private final Faction faction;
-    @Getter
     private final Function<Integer, Boolean> include;
     private static final EnumSet<Role> ALL_ROLES = EnumSet.allOf(Role.class);
 
@@ -81,7 +80,7 @@ public enum Role {
             throw new ValidationException(
                     "Uch, to mnóstwo osób. Mogę zaproponować domyślną trzydziestkę, a resztę dodaj ręcznie.");
         return ALL_ROLES.stream()
-                .filter(role -> role.getInclude().apply(numPlayers))
+                .filter(role -> role.include.apply(numPlayers))
                 .collect(Collectors.toSet());
     }
 }
