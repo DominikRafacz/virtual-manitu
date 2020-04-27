@@ -10,6 +10,7 @@ Komendy wprowadza się pisząc 'm!komenda argument / argument / argument ...'
 
 * **nowa-gra \#nazwa-kanału**
 * **dodaj-role rola1 / rola2 / rola3 ...**
+* **dodaj-domyślne-role liczba-ról**
 * **usuń-role rola1 / rola2 / rola3 ...**
 * **rozlosuj-role**
 * **wypisz-kto-żyje**
