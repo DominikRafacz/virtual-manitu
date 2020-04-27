@@ -58,20 +58,27 @@ public class MessageManager {
             case "rozlosuj-role":
                 return new CommandRandomizeRoles(message);
             case "wypisz-kto-żyje":
+            case "ż":
                 return new CommandPrintAliveRoles(message);
             case "ginie":
+            case "g":
                 return new CommandKill(message);
             case "koniec-gry":
                 return new CommandEndGame(message);
             case "głosujemy-kogo-przeszukać":
+            case "kto-p":
                 return new CommandVotingWhoToSearch(message);
             case "głosujemy-czy-wieszać":
+            case "czy-w":
                 return new CommandVotingIfToHang(message);
             case "głosujemy-kogo-wieszać":
+            case "kto-w":
                 return new CommandVotingWhoToHang(message);
             case "głosujemy-kto-przegrywa-pojedynek":
+            case "kto-d":
                 return new CommandVotingWhoLosesDuel(message);
             case "głosuję-na":
+            case "v":
                 return new CommandVote(message);
             default:
                 throw new UnknownCommandException(commandText);
