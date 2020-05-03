@@ -1,14 +1,14 @@
 package fun.dr.ktulu.game.event;
 
 public class VotingOptionPlayer extends VotingOption {
-    private final String playerTempName;
+    private final String playerCurrentName;
 
-    public VotingOptionPlayer(String playerTempName) {
-        this.playerTempName = playerTempName;
+    public VotingOptionPlayer(String playerCurrentName) {
+        this.playerCurrentName = playerCurrentName;
     }
 
     @Override
     public String toString() {
-        return playerTempName;
+        return playerCurrentName;
     }
 }

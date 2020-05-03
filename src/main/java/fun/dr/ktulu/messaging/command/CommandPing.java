@@ -12,11 +12,7 @@ public class CommandPing extends Command {
 
     @Override
     public void execute() {
-        LOGGER.debug("Pinged to user {}", message.getAuthor().getName());
-    }
-
-    @Override
-    protected void sendSuccessMessage() {
-        sendResponseMessage("pong");
+        LOGGER.debug("Received PING from user {}", message.getAuthor().getName());
+        issuer.sendMessage("Pong!");
     }
 }

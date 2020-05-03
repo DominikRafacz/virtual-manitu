@@ -19,7 +19,7 @@ public class VotingPersonal extends VotingEvent{
 
     private static List<VotingOption> getVotingOptions(@NotNull List<Player> candidates, boolean allowAbstain) {
         List<VotingOption> votingOptions = candidates.stream()
-                .map(Ktulowiec::getTempName)
+                .map(Ktulowiec::getCurrentName)
                 .map(VotingOptionPlayer::new)
                 .collect(Collectors.toList());
         if (allowAbstain) {

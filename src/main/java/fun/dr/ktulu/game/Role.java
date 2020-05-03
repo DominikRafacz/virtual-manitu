@@ -84,4 +84,8 @@ public enum Role {
                 .filter(role -> role.include.test(numPlayers))
                 .collect(Collectors.toSet());
     }
+
+    public @NotNull String getRoleAndFactionName() {
+        return name + " (" + faction.getName() + ")";
+    }
 }

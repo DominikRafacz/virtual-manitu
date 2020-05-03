@@ -1,28 +1,14 @@
 package fun.dr.ktulu.game;
 
-import fun.dr.ktulu.bot.AppManager;
 import lombok.Getter;
-import net.dv8tion.jda.api.entities.Member;
 
-import java.util.Objects;
-
-public class Ktulowiec {
+public abstract class Ktulowiec {
     @Getter
-    protected final String userID;
+    protected final String ID;
 
-    public Ktulowiec(String userID) {
-        this.userID = userID;
+    public Ktulowiec(String ID) {
+        this.ID = ID;
     }
 
-    public Member getAsMember() {
-        return Objects.requireNonNull(AppManager.getInstance()
-                .getJda()
-                .getGuildById(Game.getInstance().getGuildID()))
-                .getMemberById(userID);
-    }
-
-    public String getTempName() {
-        Member member = getAsMember();
-        return member.getNickname() == null ? member.getUser().getName() : member.getNickname();
-    }
+    public abstract String getCurrentName();
 }

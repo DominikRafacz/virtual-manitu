@@ -1,8 +1,8 @@
 package fun.dr.ktulu.bot;
 
 
-import fun.dr.ktulu.bot.listeners.MessageListener;
-import fun.dr.ktulu.bot.listeners.ReadyListener;
+import fun.dr.ktulu.bot.messaging.BotMessenger;
+import fun.dr.ktulu.game.Game;
 import lombok.Getter;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
@@ -27,10 +27,14 @@ public class AppManager {
     private String BOT_TOKEN;
 
     @Getter
-    private JDA jda;
+    private final BotMessenger messenger;
+    @Getter
+    private final Game game;
 
     private AppManager() {
         loadConfig();
+        messenger = new BotMessenger();
+        game = new Game();
         LOGGER.info("Instantiated successfully.");
     }
 
@@ -43,16 +47,14 @@ public class AppManager {
 
     public void start() {
         try {
-            jda = JDABuilder.create(BOT_TOKEN,
+            JDA jda = JDABuilder.create(BOT_TOKEN,
                     List.of(
                             GatewayIntent.GUILD_MESSAGES,
                             GatewayIntent.GUILD_MEMBERS,
                             GatewayIntent.DIRECT_MESSAGES
                     ))
                     .enableIntents(GatewayIntent.GUILD_MEMBERS)
-                    .addEventListeners(
-                            new ReadyListener(),
-                            new MessageListener())
+                    .addEventListeners(messenger)
                     .disableCache(List.of(
                             CacheFlag.ACTIVITY,
                             CacheFlag.VOICE_STATE,
@@ -64,6 +66,8 @@ public class AppManager {
             LOGGER.info("JDA built.");
             jda.awaitReady();
             LOGGER.info("JDA loaded.");
+            messenger.setJda(jda);
+            LOGGER.info("BotMessenger set up");
         } catch (LoginException | InterruptedException e) {
             LOGGER.error("Error during JDA building!");
             e.printStackTrace();

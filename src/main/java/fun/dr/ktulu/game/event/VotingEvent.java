@@ -36,13 +36,13 @@ public abstract class VotingEvent extends SpecialEvent {
         Map<VotingOption, Integer> summary = getSummary();
         return options.stream()
                 .map(option -> "Na opcję " + option.toString() + " oddano " +
-                        summary.get(option) + " głosów: " +
+                        summary.get(option) + " głosów: \n" +
                         votes.keySet().stream()
                                 .filter(voter -> votes.get(voter) == option)
-                                .map(Ktulowiec::getTempName)
+                                .map(Ktulowiec::getCurrentName)
                                 .collect(Collectors.joining(", ")))
                 .collect(Collectors.joining("\n")) +
-                "\n Zwycięża opcja/opcje: " + getResults().stream()
+                "\n\n Zwycięża opcja/opcje: " + getResults().stream()
                 .map(VotingOption::toString)
                 .collect(Collectors.joining(", ")) + "! Gratulacje! :DDD";
     }

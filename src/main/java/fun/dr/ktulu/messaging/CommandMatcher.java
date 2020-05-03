@@ -9,15 +9,15 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class MessageManager {
+public class CommandMatcher {
 
-    private static final String COMMAND_PREFIX = "m!";
-    private static final String ARGS_SEPARATOR = " */ *";
+    public static final String COMMAND_PREFIX = "m!";
+    public static final String ARGS_SEPARATOR = " */ *";
 
     public static boolean isCommand(@NotNull Message message) {
         return message
                 .getContentRaw()
-                .startsWith("m!");
+                .startsWith(COMMAND_PREFIX);
     }
 
     public static @NotNull String extractCommandText(@NotNull Message message) {
@@ -27,19 +27,8 @@ public class MessageManager {
                 .replaceFirst(COMMAND_PREFIX, "");
     }
 
-    public static @NotNull List<String> extractArgs(@NotNull Message message) {
-        String content = message.getContentRaw();
-        int spaceIndex = content.indexOf(" ");
-        if (spaceIndex == -1)
-            return new ArrayList<>(0);
-        return new ArrayList<>(
-                Arrays.asList(
-                        content.substring(spaceIndex + 1)
-                                .split(ARGS_SEPARATOR)));
-    }
-
     public static @NotNull Command matchCommand(Message message) throws UnknownCommandException {
-        String commandText = MessageManager.extractCommandText(message);
+        String commandText = CommandMatcher.extractCommandText(message);
         switch (commandText) {
             case "ping":
                 return new CommandPing(message);

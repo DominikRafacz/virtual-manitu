@@ -1,28 +1,19 @@
 package fun.dr.ktulu.game;
 
-import fun.dr.ktulu.bot.AppManager;
 import lombok.Getter;
 import lombok.Setter;
-import net.dv8tion.jda.api.entities.PrivateChannel;
 
-public class Player extends Ktulowiec {
-    private final String communicationChannelID;
+public abstract class Player extends Ktulowiec {
+    @Getter
+    @Setter
+    protected Role role;
 
     @Getter
     @Setter
-    private Role role;
+    protected boolean alive;
 
-    @Getter
-    @Setter
-    private boolean alive;
-
-    public Player(String playerID, String communicationChannelID) {
+    public Player(String playerID) {
         super(playerID);
-        this.communicationChannelID = communicationChannelID;
         this.alive = true;
-    }
-
-    public PrivateChannel getCommunicationChannel() {
-        return AppManager.getInstance().getJda().getPrivateChannelById(communicationChannelID);
     }
 }

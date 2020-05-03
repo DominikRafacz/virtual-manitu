@@ -18,17 +18,11 @@ public class CommandVotingIfToHang extends Command {
 
     @Override
     protected void execute() {
-        game.startVotingIfToHang();
-    }
-
-    @Override
-    protected void sendSuccessMessage() {
-        game.getGameChannel()
-                .sendMessage("Rozpoczynamy głosowanie nad tym, czy wieszamy. Możliwe opcje:\n" +
-                        ((VotingEvent) game.getSpecialEvent()).getOptions().stream()
+        GAME.startVotingIfToHang();
+        MESSENGER.sendToGameChannel("Rozpoczynamy głosowanie nad tym, czy wieszamy. Możliwe opcje:\n" +
+                        ((VotingEvent) GAME.getSpecialEvent()).getOptions().stream()
                                 .map(Object::toString).collect(Collectors.joining("\n")) +
-                        "\nMożna zagłosować poprzez komendę 'm!głosuję-na X', gdzie X to jedna z możliwych opcji")
-                .queue(message -> sendResponseMessage("Kości zostały rzucone. Niech lud wybierze!"));
-
+                        "\nMożna zagłosować poprzez komendę 'm!głosuję-na X', gdzie X to jedna z możliwych opcji");
+        MESSENGER.sendToManitu("Kości zostały rzucone. Niech lud wybierze!");
     }
 }
